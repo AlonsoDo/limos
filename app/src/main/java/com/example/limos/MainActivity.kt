@@ -10,15 +10,38 @@ import io.socket.client.Socket
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URISyntaxException
-
+import android.widget.AdapterView
+import android.widget.GridView
+import android.widget.Toast
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mSocket: Socket
+    lateinit var itemGRV: GridView
+    lateinit var itemList: List<GridViewModal>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        itemGRV = findViewById(R.id.idGRV)
+        itemList = ArrayList<GridViewModal>()
+
+        itemList = itemList + GridViewModal("C++")
+
+        val itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
+
+        itemGRV.adapter = itemAdapter
+
+        itemGRV.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            Toast.makeText(
+                applicationContext, itemList[position].itemText + " selected",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         try {
             mSocket = IO.socket("http://192.168.1.36:3000/")
         } catch (e: URISyntaxException) {
