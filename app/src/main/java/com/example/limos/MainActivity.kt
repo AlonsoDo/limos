@@ -1,6 +1,5 @@
 package com.example.limos
 
-//import android.R
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -21,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mSocket: Socket
     lateinit var itemGRV: GridView
     lateinit var itemList: List<GridViewModal>
+    lateinit var itemTV: TextView
+    //private var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,37 +30,48 @@ class MainActivity : AppCompatActivity() {
         itemGRV = findViewById(R.id.idGRV)
         itemList = ArrayList<GridViewModal>()
 
-        itemList = itemList + GridViewModal("C++")
-
-        val itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
-
-        itemGRV.adapter = itemAdapter
-
         itemGRV.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+
             Toast.makeText(
                 applicationContext, itemList[position].itemText + " selected",
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             ).show()
+
+            val tv2: TextView = findViewById(R.id.text1)
+            tv2.text = itemList[position].elementoId.toString()
+
+            var nPos = itemList[position].elementoId.toString()
+            itemGRV.adapter = null
+            (itemList as ArrayList<GridViewModal>).clear()
+
+            mSocket.emit("LoadElements",nPos)
         }
 
         try {
-            mSocket = IO.socket("http://192.168.1.36:3000/")
+            mSocket = IO.socket("http://192.168.1.33:3000/")
         } catch (e: URISyntaxException) {
         }
 
         mSocket.connect()
-        mSocket.emit("LoadIni")
+        mSocket.emit("LoadElements","0")
 
-        mSocket.on("Test") { args ->
+        mSocket.on("LoadElementsBack") { args ->
             runOnUiThread {
                 val data = args[0].toString()
                 val jsonarray = JSONArray(data)
+                val nCont = jsonarray.length() - 1
 
-                val json = JSONObject(jsonarray[0].toString())
-                val elementoId = json.getInt("ElementoId")
+                for (i in 0..nCont) {
+                    val json = JSONObject(jsonarray[i].toString())
+                    val elementoId = json.getInt("ElementoId")
+                    val descripcion = json.get("Descripcion")
+                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId)
+                }
 
-                val tv2: TextView = findViewById(R.id.text1)
-                tv2.text = elementoId.toString()
+                //itemGRV.adapter = null
+                var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
+                itemGRV.adapter = itemAdapter
+
             }
         }
     }

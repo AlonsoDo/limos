@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-internal class GridRVAdapter(
+class GridRVAdapter(
     private val itemList: List<GridViewModal>,
     private val context: Context
 ) :
