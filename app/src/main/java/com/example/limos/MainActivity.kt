@@ -18,10 +18,12 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mSocket: Socket
-    lateinit var itemGRV: GridView
-    lateinit var itemList: List<GridViewModal>
+    private lateinit var itemGRV: GridView
+    private lateinit var itemList: List<GridViewModal>
     lateinit var itemTV: TextView
-    //private var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
+    private var nodoPadre: Int = 0
+    private var aNodos = mutableListOf(0)
+    private var nProfundidad: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +40,13 @@ class MainActivity : AppCompatActivity() {
             ).show()
 
             val tv2: TextView = findViewById(R.id.text1)
-            tv2.text = itemList[position].elementoId.toString()
+            tv2.text = itemList[position].padreId.toString()
 
             var nPos = itemList[position].elementoId.toString()
+            nodoPadre = itemList[position].padreId
+            aNodos.add(nodoPadre)
+            nProfundidad++
+
             itemGRV.adapter = null
             (itemList as ArrayList<GridViewModal>).clear()
 
@@ -65,10 +71,10 @@ class MainActivity : AppCompatActivity() {
                     val json = JSONObject(jsonarray[i].toString())
                     val elementoId = json.getInt("ElementoId")
                     val descripcion = json.get("Descripcion")
-                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId)
+                    val padreId = json.getInt("PadreId")
+                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId,padreId)
                 }
 
-                //itemGRV.adapter = null
                 var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
                 itemGRV.adapter = itemAdapter
 
@@ -81,6 +87,23 @@ class MainActivity : AppCompatActivity() {
         tv3.text = "Test4"
     }
 
+    fun onClickbtVolver(view: View?) {
 
+        nodoPadre = aNodos[nProfundidad]
+
+        val tv3: TextView = findViewById(R.id.text1)
+        tv3.text = nodoPadre.toString()
+
+        itemGRV.adapter = null
+        (itemList as ArrayList<GridViewModal>).clear()
+
+        mSocket.emit("LoadElements",nodoPadre)
+
+        if (nProfundidad != 0) {
+            aNodos.removeAt(nProfundidad)
+            nProfundidad--
+        }
+
+    }
 
 }
