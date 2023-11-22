@@ -11,6 +11,7 @@
         android:layout_width="251dp"
         android:layout_height="46dp"
         android:layout_marginStart="5dp"
+        android:background="#03A9F4"
         android:text="Hello World!"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,6 +67,49 @@
         android:text="Volver"
         app:cornerRadius="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idGRV" />
+
+    <Button
+        android:id="@+id/btIni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickbtIni"
+        android:text="Inicial"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toEndOf="@+id/btVolver"
+        app:layout_constraintTop_toBottomOf="@+id/idGRV" />
+
+    <TextView
+        android:id="@+id/nombreCuenta"
+        android:layout_width="108dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#FF9800"
+        android:duplicateParentState="false"
+        android:editable="false"
+        android:text="Cuenta"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/btIni"
+        app:layout_constraintTop_toBottomOf="@+id/idGRV" />
+
+    <EditText
+        android:id="@+id/nombCuen"
+        android:layout_width="74dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="12345"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/nombreCuenta"
         app:layout_constraintTop_toBottomOf="@+id/idGRV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
