@@ -16,17 +16,17 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.014" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="10dp"
         android:onClick="onClickButton2"
         android:text="Enviar"
@@ -39,8 +39,7 @@
     <GridView
         android:id="@+id/idGRV"
         android:layout_width="409dp"
-        android:layout_height="400dp"
-        android:layout_marginStart="1dp"
+        android:layout_height="438dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="267dp"
@@ -51,7 +50,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2"
         app:layout_constraintVertical_bias="0.0"
@@ -83,8 +82,8 @@
 
     <TextView
         android:id="@+id/nombreCuenta"
-        android:layout_width="108dp"
-        android:layout_height="65dp"
+        android:layout_width="111dp"
+        android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#FF9800"
@@ -99,12 +98,13 @@
 
     <EditText
         android:id="@+id/nombCuen"
-        android:layout_width="74dp"
-        android:layout_height="65dp"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="text"
+        android:onClick="onClickbtnombCuen"
         android:text="12345"
         android:textSize="34sp"
         android:textStyle="bold"

@@ -10,6 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URISyntaxException
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.GridView
 import android.widget.Toast
 import com.google.gson.Gson
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private var nodoPadre: Int = 0
     private var aNodos = mutableListOf(0)
     private var nProfundidad: Int = 0
+    var itemsListDetalle = ArrayList<Detalle>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,13 @@ class MainActivity : AppCompatActivity() {
 
             val tv2: TextView = findViewById(R.id.text1)
             tv2.text = itemList[position].precio.toString()
+
+            val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
+
+            if (itemList[position].final == 1){
+                var objDetalle = Detalle(1,itemList[position].itemText,itemList[position].precio ,tvNombreCuenta.text.toString())
+                itemsListDetalle.add(objDetalle)
+            }
 
             var nPos = itemList[position].elementoId.toString()
             nodoPadre = itemList[position].padreId
@@ -74,7 +83,8 @@ class MainActivity : AppCompatActivity() {
                     val descripcion = json.get("Descripcion")
                     val padreId = json.getInt("PadreId")
                     val precio = json.getDouble("Precio")
-                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId,padreId, precio)
+                    val final = json.getInt("Final")
+                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId,padreId,precio,final)
                 }
 
                 var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
@@ -90,14 +100,10 @@ class MainActivity : AppCompatActivity() {
         val tv3: TextView = findViewById(R.id.text1)
         tv3.text = "Test4"
 
-        var itemsListDetalle = ArrayList<Detalle>()
-        var oDetalle = Detalle(1,"UNO")
-        itemsListDetalle.add(oDetalle)
-
         var gs= Gson()
         var sListaDetalle = gs.toJson(itemsListDetalle)
 
-        mSocket.emit("Test",sListaDetalle)
+        mSocket.emit("EnviarDetalle",sListaDetalle)
 
         tv3.text = sListaDetalle.toString()
         Toast.makeText(
@@ -135,6 +141,11 @@ class MainActivity : AppCompatActivity() {
             nProfundidad--
         }
 
+    }
+
+    fun onClickbtnombCuen(view: View?) {
+        val cuenta: EditText = findViewById(R.id.nombCuen)
+        cuenta.text.clear()
     }
 
 }
