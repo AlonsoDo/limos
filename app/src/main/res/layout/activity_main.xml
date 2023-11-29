@@ -80,36 +80,44 @@
         app:layout_constraintStart_toEndOf="@+id/btVolver"
         app:layout_constraintTop_toBottomOf="@+id/idGRV" />
 
-    <TextView
-        android:id="@+id/nombreCuenta"
-        android:layout_width="111dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#FF9800"
-        android:duplicateParentState="false"
-        android:editable="false"
-        android:text="Cuenta"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/btIni"
-        app:layout_constraintTop_toBottomOf="@+id/idGRV" />
-
     <EditText
         android:id="@+id/nombCuen"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="text"
         android:onClick="onClickbtnombCuen"
         android:text="12345"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/nombreCuenta"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idGRV" />
+
+    <Button
+        android:id="@+id/btExtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickbtExtras"
+        android:text="Extras"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btVolver" />
+
+    <Button
+        android:id="@+id/btBajar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickbtBajar"
+        android:text="Bajar"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toEndOf="@+id/btExtras"
+        app:layout_constraintTop_toBottomOf="@+id/btIni" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

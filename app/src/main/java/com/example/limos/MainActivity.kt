@@ -10,6 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URISyntaxException
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.Toast
@@ -22,10 +23,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mSocket: Socket
     private lateinit var itemGRV: GridView
     private lateinit var itemList: List<GridViewModal>
-    //lateinit var itemTV: TextView
     private var nodoPadre: Int = 0
     private var aNodos = mutableListOf(0)
     private var nProfundidad: Int = 0
+    private var ultimoElementoId: Int = 0
+    private var ultimoPadreId: Int = 0
     var itemsListDetalle = ArrayList<Detalle>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,28 +45,34 @@ class MainActivity : AppCompatActivity() {
             ).show()*/
 
             val tv2: TextView = findViewById(R.id.text1)
-            tv2.text = itemList[position].precio.toString()
+            tv2.text = itemList[position].itemText
 
             val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
 
             if (itemList[position].final == 1){
-                var objDetalle = Detalle(1,itemList[position].itemText,itemList[position].precio ,tvNombreCuenta.text.toString())
+                var objDetalle = Detalle(1,itemList[position].itemText,itemList[position].precio)
                 itemsListDetalle.add(objDetalle)
             }
 
+            ultimoPadreId = itemList[position].padreId
+            ultimoElementoId = itemList[position].elementoId
             var nPos = itemList[position].elementoId.toString()
-            nodoPadre = itemList[position].padreId
-            aNodos.add(nodoPadre)
-            nProfundidad++
 
-            itemGRV.adapter = null
-            (itemList as ArrayList<GridViewModal>).clear()
+            val final = itemList[position].final
 
-            mSocket.emit("LoadElements",nPos)
+            if (final == 0){
+                nodoPadre = itemList[position].padreId
+                aNodos.add(nodoPadre)
+                nProfundidad++
+                itemGRV.adapter = null
+                (itemList as ArrayList<GridViewModal>).clear()
+                mSocket.emit("LoadElements",nPos)
+            }
+
         }
 
         try {
-            mSocket = IO.socket("http://192.168.1.33:3000/")
+            mSocket = IO.socket("http://192.168.1.34:3000/")
         } catch (e: URISyntaxException) {
         }
 
@@ -92,6 +100,31 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
+        mSocket.on("LoadExtrasBack") { args ->
+            runOnUiThread {
+                val data = args[0].toString()
+                val jsonarray = JSONArray(data)
+                val nCont = jsonarray.length() - 1
+
+                itemGRV.adapter = null
+                (itemList as ArrayList<GridViewModal>).clear()
+
+                for (i in 0..nCont) {
+                    val json = JSONObject(jsonarray[i].toString())
+                    val elementoId = json.getInt("ExtraId")
+                    val descripcion = json.get("Descripcion")
+                    val padreId = ultimoPadreId //nodoPadre
+                    val precio = json.getDouble("Precio")
+                    val final = 1
+                    itemList = itemList + GridViewModal(descripcion.toString(),elementoId,padreId,precio,final)
+                }
+
+                var itemAdapter = GridRVAdapter(itemList = itemList, this@MainActivity)
+                itemGRV.adapter = itemAdapter
+
+            }
+        }
     }
 
     // Enviar lote
@@ -100,14 +133,17 @@ class MainActivity : AppCompatActivity() {
         val tv3: TextView = findViewById(R.id.text1)
         tv3.text = "Test4"
 
+        val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
+
+        var oDetalleCompleto = DetalleCompleto(tvNombreCuenta.text.toString(),itemsListDetalle)
         var gs= Gson()
-        var sListaDetalle = gs.toJson(itemsListDetalle)
+        var sListaDetalleCompleto = gs.toJson(oDetalleCompleto)
 
-        mSocket.emit("EnviarDetalle",sListaDetalle)
+        mSocket.emit("EnviarDetalle",sListaDetalleCompleto)
 
-        tv3.text = sListaDetalle.toString()
+        tv3.text = sListaDetalleCompleto.toString()
         Toast.makeText(
-                applicationContext, sListaDetalle.toString(),
+                applicationContext, sListaDetalleCompleto.toString(),
                 Toast.LENGTH_LONG
             ).show()
     }
@@ -122,6 +158,10 @@ class MainActivity : AppCompatActivity() {
         aNodos.clear()
         nodoPadre = 0
         aNodos.add(0)
+
+        var boton: Button = findViewById(R.id.btExtras)
+        boton.setEnabled(true)
+
     }
 
     fun onClickbtVolver(view: View?) {
@@ -141,11 +181,32 @@ class MainActivity : AppCompatActivity() {
             nProfundidad--
         }
 
+        var boton: Button = findViewById(R.id.btExtras)
+        boton.setEnabled(true)
+
     }
 
     fun onClickbtnombCuen(view: View?) {
         val cuenta: EditText = findViewById(R.id.nombCuen)
         cuenta.text.clear()
+    }
+
+    fun onClickbtExtras(view: View?) {
+        nodoPadre = ultimoPadreId
+        aNodos.add(nodoPadre)
+        nProfundidad++
+        var boton: Button = findViewById(R.id.btExtras)
+        boton.setEnabled(false)
+        mSocket.emit("LoadExtras",ultimoElementoId.toString())
+    }
+
+    fun onClickbtBajar(view: View?){
+        nodoPadre = ultimoPadreId
+        aNodos.add(nodoPadre)
+        nProfundidad++
+        itemGRV.adapter = null
+        (itemList as ArrayList<GridViewModal>).clear()
+        mSocket.emit("LoadElements",ultimoElementoId.toString())
     }
 
 }

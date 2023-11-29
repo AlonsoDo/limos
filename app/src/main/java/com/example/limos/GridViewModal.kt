@@ -7,3 +7,8 @@ data class GridViewModal(
     val precio: Double,
     val final: Int
 )
+
+data class Test(
+    val id: Int,
+    val nombre: String
+)
