@@ -130,8 +130,8 @@ class MainActivity : AppCompatActivity() {
     // Enviar lote
     fun onClickButton2(view: View?) {
 
-        val tv3: TextView = findViewById(R.id.text1)
-        tv3.text = "Test4"
+        //val tv3: TextView = findViewById(R.id.text1)
+        //tv3.text = "Test4"
 
         val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
 
@@ -141,9 +141,12 @@ class MainActivity : AppCompatActivity() {
 
         mSocket.emit("EnviarDetalle",sListaDetalleCompleto)
 
-        tv3.text = sListaDetalleCompleto.toString()
+        tvNombreCuenta.text = ""
+        itemsListDetalle.clear()
+
+        //tv3.text = sListaDetalleCompleto.toString()
         Toast.makeText(
-                applicationContext, sListaDetalleCompleto.toString(),
+                applicationContext, "Pedido enviado",
                 Toast.LENGTH_LONG
             ).show()
     }
