@@ -1,5 +1,6 @@
 package com.example.limos
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -210,6 +211,14 @@ class MainActivity : AppCompatActivity() {
         itemGRV.adapter = null
         (itemList as ArrayList<GridViewModal>).clear()
         mSocket.emit("LoadElements",ultimoElementoId.toString())
+    }
+
+    fun onClickbtOtra(view: View?){
+        val intent = Intent(this, Segunda::class.java)
+        val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
+        val objDetalleCompleto = DetalleCompleto(tvNombreCuenta.text.toString(),itemsListDetalle)
+        intent.putExtra("obj",objDetalleCompleto)
+        startActivity(intent)
     }
 
 }
