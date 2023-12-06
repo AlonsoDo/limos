@@ -10,8 +10,8 @@
         android:id="@+id/btFin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="527dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="568dp"
         android:onClick="onClickbtFin"
         android:text="Finalizar"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,4 +26,18 @@
         android:text="Hola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="409dp"
+        android:layout_height="485dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="#D31313"
+        app:layout_constraintBottom_toTopOf="@+id/btFin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMensage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
