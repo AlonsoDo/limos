@@ -10,11 +10,11 @@ import android.widget.TextView
 
 internal class MainAdapter(
     private val context: Context,
-    private val numbersInWords: Array<String>
+    //private var numbersInWords: ArrayList<String> = ArrayList<String>()
+    private var numbersInWords: ArrayList<String> = ArrayList<String>()
 ) :
     BaseAdapter() {
     private var layoutInflater: LayoutInflater? = null
-    //private lateinit var imageView: ImageView
     private lateinit var textView: TextView
     override fun getCount(): Int {
         return numbersInWords.size
@@ -38,9 +38,7 @@ internal class MainAdapter(
         if (convertView == null) {
             convertView = layoutInflater!!.inflate(R.layout.row_item, null)
         }
-        //imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView!!.findViewById(R.id.textView)
-        //imageView.setImageResource(numberImage[position])
         textView.text = numbersInWords[position]
         return convertView
     }

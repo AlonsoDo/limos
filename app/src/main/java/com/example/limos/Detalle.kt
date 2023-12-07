@@ -6,7 +6,7 @@ data class Detalle (
     val unidades: Int,
     val descripcion: String,
     val precio: Double
-)
+): Serializable
 
 data class DetalleCompleto(
     val cuenta: String,

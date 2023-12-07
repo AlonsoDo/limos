@@ -10,21 +10,33 @@ import android.widget.Toast
 
 class Segunda : AppCompatActivity() {
 
-    lateinit var gridView: GridView
+    private lateinit var gridView: GridView
     private var playerNames = arrayOf("Cristiano Ronaldo","Joao Felix","Bernado Silva","Andre Silve","Bruno Fernandez","William Carvalho","Nelson Semedo","Pepe","Rui Patricio")
+    private var aFilas = ArrayList<String>()
+
+    //android:gravity="center"
+    //android:textAlignment="center"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_segunda)
         val objDetalleCompleto = intent.getSerializableExtra("obj") as DetalleCompleto
+
         val tvMens : TextView = findViewById(R.id.tvMensage)
         tvMens.text = objDetalleCompleto.cuenta
 
+        for (item in objDetalleCompleto.lDetalle) {
+            var cFila = item.unidades.toString() + "  " + item.descripcion + "  " + item.precio.toString()
+            aFilas.add(cFila)
+        }
+
+        //tvMens.text = aFilas[0]
+
         gridView = findViewById(R.id.gridView)
-        val mainAdapter = MainAdapter(this@Segunda, playerNames)
+        val mainAdapter = MainAdapter(this@Segunda, aFilas)
         gridView.adapter = mainAdapter
         gridView.onItemClickListener = OnItemClickListener { _, _, position, _ ->
-            Toast.makeText(applicationContext, "You CLicked " + playerNames[+position],
+            Toast.makeText(applicationContext, "You CLicked " + aFilas[+position],
                 Toast.LENGTH_SHORT).show()
         }
 
