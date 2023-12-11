@@ -3,9 +3,10 @@ package com.example.limos
 import java.io.Serializable
 
 data class Detalle (
-    val unidades: Int,
+    var unidades: Int,
     val descripcion: String,
-    val precio: Double
+    val precio: Double,
+    val tablevel: Int
 ): Serializable
 
 data class DetalleCompleto(

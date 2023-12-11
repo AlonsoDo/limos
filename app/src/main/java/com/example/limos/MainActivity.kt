@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
 
             if (itemList[position].final == 1){
-                var objDetalle = Detalle(1,itemList[position].itemText,itemList[position].precio)
+                var objDetalle = Detalle(1,itemList[position].itemText,itemList[position].precio,nProfundidad)
                 itemsListDetalle.add(objDetalle)
             }
 
@@ -131,8 +131,8 @@ class MainActivity : AppCompatActivity() {
     // Enviar lote
     fun onClickButton2(view: View?) {
 
-        //val tv3: TextView = findViewById(R.id.text1)
-        //tv3.text = "Test4"
+        val tv: TextView = findViewById(R.id.text1)
+        tv.text = "Pedido enviado"
 
         val tvNombreCuenta: TextView = findViewById(R.id.nombCuen)
 
