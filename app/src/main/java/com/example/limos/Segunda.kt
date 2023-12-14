@@ -52,9 +52,8 @@ class Segunda : AppCompatActivity() {
 
     fun onClickbtMas(view: View?){
 
-        nTotal = 0.0
-
         if (aFilas.isNotEmpty()){
+
             var oDetalle = objDetalleCompleto.lDetalle
             var nUnid = oDetalle[nPos].unidades
             nUnid++
@@ -65,6 +64,18 @@ class Segunda : AppCompatActivity() {
             aFilas[nPos] = cFila
             val mainAdapter = MainAdapter(this@Segunda, aFilas)
             gridView.adapter = mainAdapter
+
+            nTotal += objDetalleCompleto.lDetalle[nPos].precio
+            val tvMens : TextView = findViewById(R.id.tvMensage)
+            tvMens.text = nTotal.toString()
         }
+    }
+
+    fun onClickbtBorrar(view: View?){
+
+    }
+
+    fun onClickbtMenos(view: View?){
+
     }
 }

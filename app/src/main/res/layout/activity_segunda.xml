@@ -8,10 +8,10 @@
 
     <Button
         android:id="@+id/btFin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="568dp"
+        android:layout_marginTop="550dp"
         android:onClick="onClickbtFin"
         android:text="Finalizar"
         app:cornerRadius="0dp"
@@ -55,4 +55,28 @@
         app:cornerRadius="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btFin" />
+
+    <Button
+        android:id="@+id/btBorrar"
+        android:layout_width="105dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onClickbtBorrar"
+        android:text="Borrar"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toEndOf="@+id/btFin"
+        app:layout_constraintTop_toBottomOf="@+id/gridView" />
+
+    <Button
+        android:id="@+id/btMenos"
+        android:layout_width="105dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickbtMenos"
+        android:text="Menos"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toEndOf="@+id/btMas"
+        app:layout_constraintTop_toBottomOf="@+id/btBorrar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
